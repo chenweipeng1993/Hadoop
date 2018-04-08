@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.peng</groupId>
+  <artifactId>hadoop-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <name>Chen WeiPeng Hadoop Parent</name>
+  <description>Chen WeiPeng Hadoop Parent</description>
+  
+	<modules>
+    	<module>hadoop-wordcount</module>
+    <module>hadoop-numberSequencing</module>
+  </modules>
+	
+	<!-- 全局属性配置 -->
+   <properties>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <hadoop.core.version>1.2.1</hadoop.core.version>
+       <hadoop.version>2.8.3</hadoop.version>
+       <jdk.version>1.8</jdk.version>
+   </properties>
+   
+  <!-- 这个的目的是为了parent中可以用到AppTest.java，这个是会下载jar并依赖的
+  	如果parent中用不到test则可以伤处且把AppTest.java删掉
+   -->
+	<dependencies>
+		<dependency>
+		 	<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<!-- 同意在parent中管理jar，这边配置了不会下载的，也不会依赖 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+			 	<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+			<dependency>
+			<!-- 1.2.1版本的jar是hadoop1.2.1版本用的，2.X版本用对应的版本即可，大概有四个包 -->
+			  <groupId>org.apache.hadoop</groupId>
+			  <artifactId>hadoop-core</artifactId>
+			  <version>${hadoop.core.version}</version>
+			</dependency>
+			<!-- 用如下四个jar -->
+			<dependency>
+			    <groupId>org.apache.hadoop</groupId>
+			    <artifactId>hadoop-common</artifactId>
+			    <version>${hadoop.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.hadoop</groupId>
+			    <artifactId>hadoop-client</artifactId>
+			    <version>${hadoop.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.hadoop</groupId>
+			    <artifactId>hadoop-hdfs</artifactId>
+			    <version>${hadoop.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.hadoop</groupId>
+			    <artifactId>hadoop-mapreduce-client-core</artifactId>
+			    <version>${hadoop.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jdk.tools</groupId>
+				<artifactId>jdk.tools</artifactId>
+				<version>${jdk.version}</version>
+				<scope>system</scope>
+				<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+			</dependency>
+		</dependencies>  	
+	</dependencyManagement>
+  
+	<distributionManagement> 
+		<repository>
+		<!-- 设置要上传的地址，id要和nexus上的名字一致，需要注意的是nexus2是releases，而nexus3中的值就不样了
+			且上传需要在settrings.xml中设置用户名和密码 且id的值要一样--> 
+		    <id>releases</id> 
+		    <name>Internal Releases</name> 
+		    <url>http://localhost:8081/nexus/content/repositories/releases/</url> 
+		</repository> 
+		<snapshotRepository> 
+		    <id>snapshots</id> 
+		    <name>Internal Snapshots</name> 
+		    <url>http://localhost:8001/nexus/content/repositories/snapshots/</url> 
+		</snapshotRepository> 
+	</distributionManagement>
+  
+</project>

@@ -1,0 +1,6 @@
+hello world hadoop hdfs mapreduce
+world hadoop hdfs mapreduce
+hello hadoop hdfs mapreduce
+hello world hdfs mapreduce
+hello world hadoop mapreduce
+hello world hadoop hdfs
